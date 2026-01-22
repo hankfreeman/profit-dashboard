@@ -7,7 +7,7 @@ import streamlit as st
 import pandas as pd
 import altair as alt
 from datetime import datetime, timedelta
-import os
+from pathlib import Path
 
 # ═══════════════════════════════════════════════════════════════════════════════
 # PAGE CONFIGURATION & STYLING
@@ -83,11 +83,22 @@ DEFAULT_NON_SALES_SALARY = 14500
 MIN_PRESENT_AGENTS_THRESHOLD = 25  # Minimum present agents to consider a valid working day
 
 # Path to data file - works both locally and on Streamlit Cloud
-DATA_FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'weekly_metrics_data.csv')
+# Try multiple possible locations for the data file
+def get_data_file_path():
+    possible_paths = [
+        Path(__file__).parent / 'weekly_metrics_data.csv',  # Same directory as script
+        Path.cwd() / 'weekly_metrics_data.csv',  # Current working directory
+        Path('/mount/src/profit-dashboard/weekly_metrics_data.csv'),  # Streamlit Cloud path
+    ]
+    
+    for path in possible_paths:
+        if path.exists():
+            return str(path)
+    
+    # If none found, return the most likely path (will error with helpful message)
+    return str(possible_paths[0])
 
-# Fallback if the above doesn't work (e.g., on Streamlit Cloud)
-if not os.path.exists(DATA_FILE):
-    DATA_FILE = 'weekly_metrics_data.csv'
+DATA_FILE = get_data_file_path()
 
 
 # ═══════════════════════════════════════════════════════════════════════════════
