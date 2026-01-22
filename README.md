@@ -1,6 +1,6 @@
-# :earth_americas: GDP dashboard template
+# Insurance KPI Dashboard
 
-A simple Streamlit app showing the GDP of different countries in the world.
+A dashboard for an insurance company showing KPIs and company performance over time.
 
 [![Open in Streamlit](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://gdp-dashboard-template.streamlit.app/)
 
