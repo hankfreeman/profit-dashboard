@@ -82,8 +82,12 @@ TRAINING_DAILY_SALARY = 28.85 * 8  # $230.80 per day
 DEFAULT_NON_SALES_SALARY = 14500
 MIN_PRESENT_AGENTS_THRESHOLD = 25  # Minimum present agents to consider a valid working day
 
-# Path to data file - looks in same directory as script
-DATA_FILE = os.path.join(os.path.dirname(__file__), 'weekly_metrics_data.csv')
+# Path to data file - works both locally and on Streamlit Cloud
+DATA_FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'weekly_metrics_data.csv')
+
+# Fallback if the above doesn't work (e.g., on Streamlit Cloud)
+if not os.path.exists(DATA_FILE):
+    DATA_FILE = 'weekly_metrics_data.csv'
 
 
 # ═══════════════════════════════════════════════════════════════════════════════
